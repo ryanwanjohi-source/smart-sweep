@@ -1,0 +1,531 @@
+/* ==========================================================
+   SMART SWEEP — STYLESHEET
+   Every page of the system uses this one CSS file.
+   CSS is the part that gives the pages their colours,
+   sizes and layout. Each section below says what it does.
+   ========================================================== */
+
+
+/* ---------- The whole page ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;   /* padding does not add to the width */
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #eef2f0;   /* light grey-green page background */
+    color: #1c2b23;              /* almost-black text */
+    font-size: 15px;
+}
+
+a {
+    color: #0e7c3f;   /* links are green */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* ---------- Layout: menu on the left, content on the right ---------- */
+
+/* display:flex puts the sidebar and the main part side by side */
+.page {
+    display: flex;
+    min-height: 100vh;   /* at least as tall as the screen */
+}
+
+
+/* ---------- The left side menu ---------- */
+
+.sidebar {
+    width: 230px;
+    background-color: #12291d;   /* very dark green */
+    color: #c9d8cf;
+    padding-bottom: 16px;
+}
+
+/* The logo area at the top of the menu */
+.logo {
+    padding: 18px;
+    border-bottom: 1px solid #2a4433;
+}
+
+.logo-box {
+    display: inline-block;
+    background-color: #0e7c3f;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 7px 12px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+}
+
+.logo-name {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.logo-small {
+    font-size: 12px;
+    color: #93a89b;
+}
+
+/* The list of links in the menu */
+.menu {
+    padding: 12px;
+}
+
+.menu-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #7e968a;
+    padding: 6px 10px;
+}
+
+.menu a {
+    display: block;          /* each link takes its own line */
+    color: #c9d8cf;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 3px;
+}
+
+.menu a:hover {
+    background-color: #1d3d2b;
+    color: white;
+    text-decoration: none;
+}
+
+/* The link of the page you are on now is filled green */
+.menu a.active {
+    background-color: #0e7c3f;
+    color: white;
+    font-weight: bold;
+}
+
+/* The red number next to "Alerts" — how many alerts are waiting */
+.menu .count {
+    background-color: #d9534f;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 1px 8px;
+    margin-left: 6px;
+}
+
+/* Log Out at the bottom of the menu */
+.logout {
+    padding: 12px;
+    border-top: 1px solid #2a4433;
+    margin-top: 10px;
+}
+
+.logout a {
+    color: #c9d8cf;
+    display: block;
+    padding: 8px 10px;
+}
+
+.logout a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+
+/* ---------- The main part (right side) ---------- */
+
+.main {
+    flex: 1;   /* takes all the space that is left */
+}
+
+/* The white bar at the top with the page name */
+.top {
+    background-color: white;
+    border-bottom: 1px solid #dde5e0;
+    padding: 14px 26px;
+}
+
+.top h1 {
+    font-size: 21px;
+    display: inline-block;
+}
+
+.top .date {
+    color: #68786e;
+    font-size: 13px;
+}
+
+/* The logged-in user, on the right of the top bar */
+.user {
+    float: right;
+    text-align: right;
+    font-size: 14px;
+}
+
+.user small {
+    display: block;
+    color: #68786e;
+    font-size: 12px;
+}
+
+/* The space where the page content goes */
+.content {
+    padding: 24px 26px 36px;
+}
+
+
+/* ---------- The four small cards at the top of a page ---------- */
+
+/* flex + wrap: the cards sit in a row and wrap on small screens */
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: white;
+    border: 1px solid #dde5e0;
+    border-radius: 10px;
+    padding: 16px 18px;
+    width: 230px;
+}
+
+.card .card-title {
+    color: #68786e;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.card .number {
+    font-size: 31px;
+    font-weight: bold;
+    margin: 3px 0;
+}
+
+.card .note {
+    color: #68786e;
+    font-size: 13px;
+}
+
+/* A card number can be orange (warning) or red (danger) */
+.card .number.orange { color: #e8a13a; }
+.card .number.red    { color: #d9534f; }
+
+
+/* ---------- White boxes that hold tables and lists ---------- */
+
+.box {
+    background-color: white;
+    border: 1px solid #dde5e0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.box-head {
+    padding: 14px 18px;
+    border-bottom: 1px solid #dde5e0;
+}
+
+.box-head h2 {
+    font-size: 16px;
+    display: inline-block;
+}
+
+.box-head .right {
+    float: right;
+    font-size: 13px;
+    color: #68786e;
+}
+
+.box-body {
+    padding: 16px 18px;
+}
+
+
+/* ---------- Tables ---------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;   /* no double borders */
+    font-size: 14px;
+}
+
+th, td {
+    text-align: left;
+    padding: 10px 14px;
+}
+
+th {
+    background-color: #f6f9f7;
+    color: #68786e;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #dde5e0;
+}
+
+td {
+    border-bottom: 1px solid #eef2f0;
+}
+
+tr:hover td {
+    background-color: #f8fbf9;   /* row lights up when the mouse is on it */
+}
+
+.num {
+    text-align: right;   /* numbers line up on the right */
+}
+
+
+/* ---------- The fill-level bar (how full a bin is) ---------- */
+
+/* The grey track of the bar */
+.bar {
+    display: inline-block;
+    width: 120px;
+    height: 10px;
+    background-color: #e6ece8;
+    border-radius: 5px;
+    overflow: hidden;   /* the coloured part stays inside the track */
+    vertical-align: middle;
+}
+
+/* The coloured part. Its width is set on the page itself,
+   for example style="width:92%" means the bin is 92% full. */
+.fill {
+    height: 10px;
+    background-color: #0e7c3f;   /* green = fine */
+}
+
+.fill.orange { background-color: #e8a13a; }   /* orange = near full */
+.fill.red    { background-color: #d9534f; }   /* red = full */
+
+
+/* ---------- Small coloured labels (badges) ---------- */
+
+.badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 10px;
+    border-radius: 10px;
+    background-color: #e3f2e8;
+    color: #0a5c30;
+}
+
+.badge.orange { background-color: #fdf1de; color: #9a6714; }
+.badge.red    { background-color: #fbe7e6; color: #a8322e; }
+.badge.blue   { background-color: #e5eef7; color: #2f6fb2; }
+.badge.grey   { background-color: #eceff0; color: #5c6a63; }
+
+
+/* ---------- Buttons ---------- */
+
+.btn {
+    display: inline-block;
+    background-color: #0e7c3f;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0a5c30;
+    text-decoration: none;
+}
+
+/* A white button with a thin border */
+.btn-white {
+    background-color: white;
+    color: #0a5c30;
+    border: 1px solid #dde5e0;
+}
+
+.btn-white:hover {
+    background-color: white;
+    border-color: #0e7c3f;
+}
+
+
+/* ---------- Alert rows (on the dashboard) ---------- */
+
+.alert-row {
+    padding: 12px 18px;
+    border-bottom: 1px solid #eef2f0;
+}
+
+.alert-row .what {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.alert-row .when {
+    color: #68786e;
+    font-size: 12px;
+}
+
+
+/* ---------- Route boxes (on the Routes page) ---------- */
+
+.route-head {
+    background-color: #f6f9f7;
+    padding: 12px 18px;
+    border-bottom: 1px solid #dde5e0;
+    font-size: 14px;
+}
+
+.route-head .rname {
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+/* The stops of a route, in order */
+.stops {
+    padding: 12px 18px;
+    font-size: 14px;
+}
+
+.stops .stop {
+    display: inline-block;
+    background-color: #e3f2e8;
+    color: #0a5c30;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 4px 12px;
+    margin: 3px 2px;
+}
+
+.stops .arrow {
+    color: #68786e;
+}
+
+
+/* ---------- Forms (login page and others) ---------- */
+
+.field {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid #dde5e0;
+    border-radius: 8px;
+}
+
+
+/* ---------- The login page ---------- */
+
+/* The dark green full-screen background of the login page */
+.login-page {
+    background-color: #12291d;
+    min-height: 100vh;
+    padding: 40px 16px;
+}
+
+/* The white box in the middle with the login form */
+.login-box {
+    background-color: white;
+    border-radius: 14px;
+    width: 380px;
+    max-width: 100%;
+    margin: 0 auto;   /* centres the box */
+    padding: 30px;
+}
+
+.login-box h1 {
+    font-size: 20px;
+    margin: 12px 0 4px;
+}
+
+.login-box .sub {
+    color: #68786e;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.login-box .btn {
+    width: 100%;
+    padding: 11px;
+    text-align: center;
+}
+
+/* The light green note with the demo accounts */
+.demo {
+    background-color: #e3f2e8;
+    color: #0a5c30;
+    font-size: 13px;
+    border-radius: 8px;
+    padding: 9px 12px;
+    margin-bottom: 18px;
+}
+
+.login-links {
+    margin-top: 14px;
+    font-size: 13px;
+}
+
+.login-links .right {
+    float: right;
+}
+
+.login-foot {
+    text-align: center;
+    color: #93a89b;
+    font-size: 12px;
+    margin-top: 16px;
+}
+
+
+/* ---------- Small helpers ---------- */
+
+.grey-text { color: #68786e; }
+.small { font-size: 13px; }
+
+.foot-note {
+    text-align: center;
+    color: #68786e;
+    font-size: 13px;
+    padding-top: 6px;
+}
+
+
+/* ---------- The number circle on a checkpoint card ---------- */
+
+.checkpoint-num {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;      /* centres the number up and down */
+    text-align: center;
+    background-color: #0e7c3f;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 50%;     /* makes the square a circle */
+    margin-bottom: 8px;
+}
