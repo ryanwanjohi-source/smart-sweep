@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — Users page.
+     Everyone who can log in to the system: residents, dispatchers,
+     drivers, accountants and administrators. Only administrators
+     can add or change users. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users — Smart Sweep</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- The left side menu (same on every page) -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-box">S</div>
+            <div class="logo-name">Smart Sweep</div>
+            <div class="logo-small">Garbage Management</div>
+        </div>
+        <div class="menu">
+            <div class="menu-title">MENU</div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="about.html">About</a>
+            <a href="bins.html">Smart Bins</a>
+            <a href="alerts.html">Alerts <span class="count">3</span></a>
+            <a href="routes.html">Routes</a>
+            <a href="checkpoints.html">Checkpoints</a>
+            <a href="reports.html">Reports</a>
+            <a href="users.html" class="active">Users</a>
+        </div>
+        <div class="logout">
+            <a href="login.html">Log Out</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="top">
+            <div class="user">David Kamau<small>Dispatcher</small></div>
+            <h1>Users</h1>
+            <div class="date">Monday, 9 November 2026</div>
+        </div>
+
+        <div class="content">
+
+            <!-- The four number cards -->
+            <div class="cards">
+                <div class="card">
+                    <div class="card-title">TOTAL USERS</div>
+                    <div class="number">358</div>
+                    <div class="note">Everyone with a login</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">RESIDENTS</div>
+                    <div class="number">342</div>
+                    <div class="note">Subscribed households</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">STAFF</div>
+                    <div class="number">16</div>
+                    <div class="note">3 dispatchers · 9 drivers · 2 accountants · 2 administrators</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">LOGGED IN TODAY</div>
+                    <div class="number">47</div>
+                    <div class="note">From the audit log</div>
+                </div>
+            </div>
+
+            <!-- The table of users.
+                 The badge shows each person's role in the system. -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>System Users</h2>
+                    <span class="right"><a href="#">+ Register a new user</a></span>
+                </div>
+                <table>
+                    <tr>
+                        <th>NAME</th><th>USERNAME</th><th>ROLE</th><th>PHONE</th><th>STATUS</th>
+                    </tr>
+                    <tr><td><b>Ryan Wachira</b></td><td>admin</td><td><span class="badge blue">Administrator</span></td><td>0712 345 678</td><td><span class="badge">Active</span></td></tr>
+                    <tr><td><b>David Kamau</b></td><td>dkamau</td><td><span class="badge blue">Dispatcher</span></td><td>0733 218 540</td><td><span class="badge">Active</span></td></tr>
+                    <tr><td><b>James Mwangi</b></td><td>jmwangi</td><td><span class="badge blue">Collection Driver</span></td><td>0701 884 236</td><td><span class="badge">Active</span></td></tr>
+                    <tr><td><b>Ann Wambui</b></td><td>awambui</td><td><span class="badge blue">Accountant</span></td><td>0722 450 917</td><td><span class="badge">Active</span></td></tr>
+                    <tr><td><b>Peter Otieno</b></td><td>potieno</td><td><span class="badge blue">Collection Driver</span></td><td>0740 663 128</td><td><span class="badge">Active</span></td></tr>
+                    <tr><td><b>Grace Achieng</b></td><td>gachieng</td><td><span class="badge grey">Resident</span></td><td>0715 902 344</td><td><span class="badge">Active</span></td></tr>
+                    <tr><td><b>Faith Njeri</b></td><td>fnjeri</td><td><span class="badge grey">Resident</span></td><td>0768 117 205</td><td><span class="badge orange">Unpaid Invoice</span></td></tr>
+                    <tr><td><b>John Kiprop</b></td><td>jkiprop</td><td><span class="badge grey">Resident</span></td><td>0790 554 731</td><td><span class="badge">Active</span></td></tr>
+                </table>
+            </div>
+
+            <p class="foot-note">A user's role decides what they can see and do after logging in.</p>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

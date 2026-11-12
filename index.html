@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — index page (the login page).
+     A server always opens the file called index.html first,
+     so this page IS the login page: the user types a username
+     and a password, picks a role, and clicks Log In. The form
+     then opens the dashboard page. (login.html is the same page,
+     kept under its own name as well.) -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Smart Sweep</title>
+    <!-- This line brings in all the colours and layout from the CSS file -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="login-page">
+        <div class="login-box">
+
+            <!-- The system logo and name -->
+            <div class="logo-box">S</div>
+            <div class="logo-name" style="color:#1c2b23;">Smart Sweep</div>
+            <div class="logo-small">Garbage Management System</div>
+
+            <h1>Welcome back</h1>
+            <p class="sub">Log in to continue to the Smart Sweep system.</p>
+
+            <!-- Demo accounts, so anyone can try the system -->
+            <div class="demo">
+                Demo accounts — Dispatcher: <b>dkamau</b> · Driver: <b>jmwangi</b> ·
+                Accountant: <b>awambui</b> · Administrator: <b>admin</b> (any password)
+            </div>
+
+            <!-- The login form. When it is submitted, it opens dashboard.html -->
+            <form action="dashboard.html" method="get">
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="e.g. dkamau" required>
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="field">
+                    <label for="role">Log in as</label>
+                    <select id="role" name="role">
+                        <option>Dispatcher</option>
+                        <option>Collection Driver</option>
+                        <option>Accountant</option>
+                        <option>Administrator</option>
+                        <option>Resident</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Log In</button>
+            </form>
+
+            <div class="login-links">
+                <a href="#">Forgot password?</a>
+                <a href="signup.html" class="right">Register as a resident</a>
+            </div>
+        </div>
+        <p class="login-foot">Smart Sweep · Smart garbage collection for Nairobi estates</p>
+    </div>
+
+</body>
+</html>

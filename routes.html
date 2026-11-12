@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — Routes page.
+     A route is one trip by one truck. Each route has an ordered
+     list of stops — the bins the driver empties, in order. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routes — Smart Sweep</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- The left side menu (same on every page) -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-box">S</div>
+            <div class="logo-name">Smart Sweep</div>
+            <div class="logo-small">Garbage Management</div>
+        </div>
+        <div class="menu">
+            <div class="menu-title">MENU</div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="about.html">About</a>
+            <a href="bins.html">Smart Bins</a>
+            <a href="alerts.html">Alerts <span class="count">3</span></a>
+            <a href="routes.html" class="active">Routes</a>
+            <a href="checkpoints.html">Checkpoints</a>
+            <a href="reports.html">Reports</a>
+            <a href="users.html">Users</a>
+        </div>
+        <div class="logout">
+            <a href="login.html">Log Out</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="top">
+            <div class="user">David Kamau<small>Dispatcher</small></div>
+            <h1>Routes</h1>
+            <div class="date">Monday, 9 November 2026</div>
+        </div>
+
+        <div class="content">
+
+            <!-- The four number cards -->
+            <div class="cards">
+                <div class="card">
+                    <div class="card-title">ROUTES TODAY</div>
+                    <div class="number">6</div>
+                    <div class="note">Planned by the route optimiser</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">COMPLETED</div>
+                    <div class="number">4</div>
+                    <div class="note">All stops emptied</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">IN PROGRESS</div>
+                    <div class="number orange">2</div>
+                    <div class="note">Trucks are on the road</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">DISTANCE SAVED</div>
+                    <div class="number">31 km</div>
+                    <div class="note">Compared to fixed rounds</div>
+                </div>
+            </div>
+
+            <!-- One box per route.
+                 The stops are listed in the order the driver visits them. -->
+
+            <div class="box">
+                <div class="route-head">
+                    <span class="rname">Route R-05 — Kilimani &amp; Ruaka Pickups</span>
+                    <span class="badge orange">Planned</span>
+                    <div class="small grey-text">Driver: P. Otieno · Vehicle: KDL 452B · Starts 10:30 · Covers the two full bins from today's alerts</div>
+                </div>
+                <div class="stops">
+                    <span class="stop">Depot</span> <span class="arrow">→</span>
+                    <span class="stop">NRB-001 Kilimani (92%)</span> <span class="arrow">→</span>
+                    <span class="stop">NRB-004 Ruaka (85%)</span> <span class="arrow">→</span>
+                    <span class="stop">NRB-009 Kileleshwa (54%)</span> <span class="arrow">→</span>
+                    <span class="stop">Dandora Dumpsite</span>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="route-head">
+                    <span class="rname">Route R-03 — Kasarani Round</span>
+                    <span class="badge blue">In Progress</span>
+                    <div class="small grey-text">Driver: J. Mwangi · Vehicle: KCX 219A · Started 07:40 · Delayed 25 min (reported by the driver)</div>
+                </div>
+                <div class="stops">
+                    <span class="stop">Depot</span> <span class="arrow">→</span>
+                    <span class="stop">NRB-006 Kasarani (68%)</span> <span class="arrow">→</span>
+                    <span class="stop">NRB-011 Ruaraka (offline)</span> <span class="arrow">→</span>
+                    <span class="stop">Dandora Dumpsite</span>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="route-head">
+                    <span class="rname">Route R-02 — Westlands Round</span>
+                    <span class="badge">Completed</span>
+                    <div class="small grey-text">Driver: M. Njoroge · Vehicle: KDL 907C · Finished 08:20 · 6 bins emptied</div>
+                </div>
+                <div class="stops">
+                    <span class="stop">Depot</span> <span class="arrow">→</span>
+                    <span class="stop">NRB-002 Westlands (74%)</span> <span class="arrow">→</span>
+                    <span class="stop">NRB-008 Lavington (79%)</span> <span class="arrow">→</span>
+                    <span class="stop">Dandora Dumpsite</span>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="route-head">
+                    <span class="rname">Route R-01 — Karen &amp; South C Round</span>
+                    <span class="badge">Completed</span>
+                    <div class="small grey-text">Driver: P. Otieno · Vehicle: KDL 452B · Finished 07:55 · 5 bins emptied</div>
+                </div>
+                <div class="stops">
+                    <span class="stop">Depot</span> <span class="arrow">→</span>
+                    <span class="stop">NRB-003 Karen (41%)</span> <span class="arrow">→</span>
+                    <span class="stop">NRB-007 South C (37%)</span> <span class="arrow">→</span>
+                    <span class="stop">NRB-005 Embakasi (23%)</span> <span class="arrow">→</span>
+                    <span class="stop">Dandora Dumpsite</span>
+                </div>
+            </div>
+
+            <p class="foot-note">Routes are calculated from live fill levels, so trucks only visit bins that need emptying.</p>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

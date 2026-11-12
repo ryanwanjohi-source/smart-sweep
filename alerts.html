@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — Alerts page.
+     Alerts are raised automatically when a bin reaches 80% full,
+     and when a driver reports a delay. The dispatcher acknowledges
+     an alert and schedules a collection. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerts — Smart Sweep</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- The left side menu (same on every page) -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-box">S</div>
+            <div class="logo-name">Smart Sweep</div>
+            <div class="logo-small">Garbage Management</div>
+        </div>
+        <div class="menu">
+            <div class="menu-title">MENU</div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="about.html">About</a>
+            <a href="bins.html">Smart Bins</a>
+            <a href="alerts.html" class="active">Alerts <span class="count">3</span></a>
+            <a href="routes.html">Routes</a>
+            <a href="checkpoints.html">Checkpoints</a>
+            <a href="reports.html">Reports</a>
+            <a href="users.html">Users</a>
+        </div>
+        <div class="logout">
+            <a href="login.html">Log Out</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="top">
+            <div class="user">David Kamau<small>Dispatcher</small></div>
+            <h1>Alerts</h1>
+            <div class="date">Monday, 9 November 2026</div>
+        </div>
+
+        <div class="content">
+
+            <!-- The four number cards -->
+            <div class="cards">
+                <div class="card">
+                    <div class="card-title">UNACKNOWLEDGED</div>
+                    <div class="number red">3</div>
+                    <div class="note">Need a dispatcher's action</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">FILL-LEVEL ALERTS</div>
+                    <div class="number">6</div>
+                    <div class="note">Raised in the last 24 hours</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">DELAY ALERTS</div>
+                    <div class="number orange">1</div>
+                    <div class="note">Route R-03, this morning</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">ACKNOWLEDGED TODAY</div>
+                    <div class="number">4</div>
+                    <div class="note">All with collections scheduled</div>
+                </div>
+            </div>
+
+            <!-- The table of alerts -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>Fill-Level and Delay Alerts</h2>
+                    <span class="right">Alert threshold: bin fill level at 80%</span>
+                </div>
+                <table>
+                    <tr>
+                        <th>ALERT</th><th>BIN / ROUTE</th><th>TYPE</th><th>RAISED</th><th>STATUS</th><th></th>
+                    </tr>
+                    <tr>
+                        <td><b>AL-1042</b></td><td>NRB-001 — Kilimani</td>
+                        <td><span class="badge red">Fill Level · 92%</span></td>
+                        <td>Today, 08:42</td>
+                        <td><span class="badge red">Not Acknowledged</span></td>
+                        <td><a class="btn" href="routes.html">Schedule Collection</a></td>
+                    </tr>
+                    <tr>
+                        <td><b>AL-1041</b></td><td>NRB-004 — Ruaka</td>
+                        <td><span class="badge red">Fill Level · 85%</span></td>
+                        <td>Today, 07:15</td>
+                        <td><span class="badge red">Not Acknowledged</span></td>
+                        <td><a class="btn" href="routes.html">Schedule Collection</a></td>
+                    </tr>
+                    <tr>
+                        <td><b>AL-1040</b></td><td>Route R-03 — Kasarani</td>
+                        <td><span class="badge orange">Delay · 25 min</span></td>
+                        <td>Today, 09:03</td>
+                        <td><span class="badge red">Not Acknowledged</span></td>
+                        <td><a class="btn btn-white" href="#">Acknowledge</a></td>
+                    </tr>
+                    <tr>
+                        <td><b>AL-1039</b></td><td>NRB-008 — Lavington</td>
+                        <td><span class="badge orange">Fill Level · 79%</span></td>
+                        <td>Today, 08:12</td>
+                        <td><span class="badge">Acknowledged</span></td>
+                        <td><span class="grey-text small">Route R-05</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>AL-1038</b></td><td>NRB-002 — Westlands</td>
+                        <td><span class="badge orange">Fill Level · 74%</span></td>
+                        <td>Today, 06:58</td>
+                        <td><span class="badge">Acknowledged</span></td>
+                        <td><span class="grey-text small">Route R-02</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>AL-1037</b></td><td>NRB-011 — Ruaraka</td>
+                        <td><span class="badge grey">Sensor Offline</span></td>
+                        <td>Yesterday, 18:20</td>
+                        <td><span class="badge">Acknowledged</span></td>
+                        <td><span class="grey-text small">Technician assigned</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <p class="foot-note">Acknowledging an alert records it against your dispatcher account in the audit log.</p>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

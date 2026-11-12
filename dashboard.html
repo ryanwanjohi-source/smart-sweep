@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — Dashboard page.
+     This is the first page after logging in. It shows four numbers
+     at the top, a table of bins with their live fill levels, and
+     the latest alerts. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — Smart Sweep</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- ===== The left side menu. It is the same on every page.
+         The link with class "active" is the page you are on now. ===== -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-box">S</div>
+            <div class="logo-name">Smart Sweep</div>
+            <div class="logo-small">Garbage Management</div>
+        </div>
+        <div class="menu">
+            <div class="menu-title">MENU</div>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="about.html">About</a>
+            <a href="bins.html">Smart Bins</a>
+            <a href="alerts.html">Alerts <span class="count">3</span></a>
+            <a href="routes.html">Routes</a>
+            <a href="checkpoints.html">Checkpoints</a>
+            <a href="reports.html">Reports</a>
+            <a href="users.html">Users</a>
+        </div>
+        <div class="logout">
+            <a href="login.html">Log Out</a>
+        </div>
+    </div>
+
+    <!-- ===== The main part of the page ===== -->
+    <div class="main">
+
+        <!-- The white bar at the top -->
+        <div class="top">
+            <div class="user">David Kamau<small>Dispatcher</small></div>
+            <h1>Dashboard</h1>
+            <div class="date">Monday, 9 November 2026</div>
+        </div>
+
+        <div class="content">
+
+            <!-- The four number cards -->
+            <div class="cards">
+                <div class="card">
+                    <div class="card-title">TOTAL SMART BINS</div>
+                    <div class="number">24</div>
+                    <div class="note">8 shown in live monitoring below</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">BINS NEAR FULL</div>
+                    <div class="number orange">5</div>
+                    <div class="note">Fill level above 70%</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">ACTIVE ALERTS</div>
+                    <div class="number red">3</div>
+                    <div class="note">Waiting to be acknowledged</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">COLLECTIONS TODAY</div>
+                    <div class="number">12</div>
+                    <div class="note">4 routes completed, 2 in progress</div>
+                </div>
+            </div>
+
+            <!-- Live bin monitoring table.
+                 The bar in each row shows how full the bin is:
+                 the coloured part is as wide as the fill level.
+                 Green = fine, orange = near full, red = full. -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>Live Bin Monitoring</h2>
+                    <a class="right" href="bins.html">View all bins</a>
+                </div>
+                <table>
+                    <tr>
+                        <th>BIN</th><th>LOCATION</th><th>WASTE TYPE</th><th>FILL LEVEL</th><th>STATUS</th>
+                    </tr>
+                    <tr>
+                        <td><b>NRB-001</b></td><td>Kilimani, Yaya Centre</td><td>General</td>
+                        <td><div class="bar"><div class="fill red" style="width:92%"></div></div> <b>92%</b></td>
+                        <td><span class="badge red">Full</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>NRB-002</b></td><td>Westlands, Sarit Centre</td><td>Dry Recyclables</td>
+                        <td><div class="bar"><div class="fill orange" style="width:74%"></div></div> <b>74%</b></td>
+                        <td><span class="badge orange">Near Full</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>NRB-003</b></td><td>Karen, Hardy</td><td>Wet Organic</td>
+                        <td><div class="bar"><div class="fill" style="width:41%"></div></div> <b>41%</b></td>
+                        <td><span class="badge">Normal</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>NRB-004</b></td><td>Ruaka, Two Rivers</td><td>Metallic</td>
+                        <td><div class="bar"><div class="fill red" style="width:85%"></div></div> <b>85%</b></td>
+                        <td><span class="badge red">Full</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>NRB-005</b></td><td>Embakasi, Fedha Estate</td><td>General</td>
+                        <td><div class="bar"><div class="fill" style="width:23%"></div></div> <b>23%</b></td>
+                        <td><span class="badge">Normal</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>NRB-006</b></td><td>Kasarani, TRM Drive</td><td>Dry Recyclables</td>
+                        <td><div class="bar"><div class="fill orange" style="width:68%"></div></div> <b>68%</b></td>
+                        <td><span class="badge orange">Near Full</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>NRB-007</b></td><td>South C, Mugoya Estate</td><td>Wet Organic</td>
+                        <td><div class="bar"><div class="fill" style="width:37%"></div></div> <b>37%</b></td>
+                        <td><span class="badge">Normal</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>NRB-008</b></td><td>Lavington, James Gichuru Rd</td><td>General</td>
+                        <td><div class="bar"><div class="fill orange" style="width:79%"></div></div> <b>79%</b></td>
+                        <td><span class="badge orange">Near Full</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- The latest alerts -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>Latest Alerts</h2>
+                    <a class="right" href="alerts.html">View all alerts</a>
+                </div>
+                <div class="alert-row">
+                    <div class="what">NRB-001 reached 92% — fill-level alert</div>
+                    <div class="when">Kilimani · Today, 08:42</div>
+                </div>
+                <div class="alert-row">
+                    <div class="what">NRB-004 reached 85% — fill-level alert</div>
+                    <div class="when">Ruaka · Today, 07:15</div>
+                </div>
+                <div class="alert-row">
+                    <div class="what">Route R-03 delayed by 25 minutes</div>
+                    <div class="when">Driver J. Mwangi · Today, 09:03</div>
+                </div>
+                <div class="alert-row">
+                    <div class="what">Route R-02 completed — 6 bins emptied</div>
+                    <div class="when">Westlands · Today, 08:20</div>
+                </div>
+            </div>
+
+            <p class="foot-note">Smart Sweep — multi-sensor bin telemetry, automated segregation and route optimisation for urban Kenya.</p>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

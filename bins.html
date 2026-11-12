@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — Smart Bins page.
+     A table of every smart bin: where it is, what waste it takes,
+     how full it is, its weight, and whether it is online. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Bins — Smart Sweep</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- The left side menu (same on every page) -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-box">S</div>
+            <div class="logo-name">Smart Sweep</div>
+            <div class="logo-small">Garbage Management</div>
+        </div>
+        <div class="menu">
+            <div class="menu-title">MENU</div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="about.html">About</a>
+            <a href="bins.html" class="active">Smart Bins</a>
+            <a href="alerts.html">Alerts <span class="count">3</span></a>
+            <a href="routes.html">Routes</a>
+            <a href="checkpoints.html">Checkpoints</a>
+            <a href="reports.html">Reports</a>
+            <a href="users.html">Users</a>
+        </div>
+        <div class="logout">
+            <a href="login.html">Log Out</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="top">
+            <div class="user">David Kamau<small>Dispatcher</small></div>
+            <h1>Smart Bins</h1>
+            <div class="date">Monday, 9 November 2026</div>
+        </div>
+
+        <div class="content">
+
+            <!-- The four number cards -->
+            <div class="cards">
+                <div class="card">
+                    <div class="card-title">REGISTERED BINS</div>
+                    <div class="number">24</div>
+                    <div class="note">Across 9 Nairobi estates</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">ONLINE NOW</div>
+                    <div class="number">22</div>
+                    <div class="note">Sending telemetry readings</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">FULL (80%+)</div>
+                    <div class="number red">2</div>
+                    <div class="note">NRB-001 and NRB-004</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">OFFLINE</div>
+                    <div class="number orange">2</div>
+                    <div class="note">Check the sensor units</div>
+                </div>
+            </div>
+
+            <!-- The table of all bins.
+                 Each bar is as wide as the bin's fill level. -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>All Smart Bins</h2>
+                    <span class="right"><a href="#">+ Register a new bin</a></span>
+                </div>
+                <table>
+                    <tr>
+                        <th>BIN CODE</th><th>LOCATION</th><th>WASTE TYPE</th><th>FILL LEVEL</th><th class="num">WEIGHT (KG)</th><th>LAST READING</th><th>STATUS</th>
+                    </tr>
+                    <tr><td><b>NRB-001</b></td><td>Kilimani, Yaya Centre</td><td>General</td><td><div class="bar"><div class="fill red" style="width:92%"></div></div> <b>92%</b></td><td class="num">148.2</td><td>08:42</td><td><span class="badge red">Full</span></td></tr>
+                    <tr><td><b>NRB-002</b></td><td>Westlands, Sarit Centre</td><td>Dry Recyclables</td><td><div class="bar"><div class="fill orange" style="width:74%"></div></div> <b>74%</b></td><td class="num">96.5</td><td>08:37</td><td><span class="badge orange">Near Full</span></td></tr>
+                    <tr><td><b>NRB-003</b></td><td>Karen, Hardy</td><td>Wet Organic</td><td><div class="bar"><div class="fill" style="width:41%"></div></div> <b>41%</b></td><td class="num">58.9</td><td>08:31</td><td><span class="badge">Normal</span></td></tr>
+                    <tr><td><b>NRB-004</b></td><td>Ruaka, Two Rivers</td><td>Metallic</td><td><div class="bar"><div class="fill red" style="width:85%"></div></div> <b>85%</b></td><td class="num">132.7</td><td>07:15</td><td><span class="badge red">Full</span></td></tr>
+                    <tr><td><b>NRB-005</b></td><td>Embakasi, Fedha Estate</td><td>General</td><td><div class="bar"><div class="fill" style="width:23%"></div></div> <b>23%</b></td><td class="num">31.4</td><td>08:44</td><td><span class="badge">Normal</span></td></tr>
+                    <tr><td><b>NRB-006</b></td><td>Kasarani, TRM Drive</td><td>Dry Recyclables</td><td><div class="bar"><div class="fill orange" style="width:68%"></div></div> <b>68%</b></td><td class="num">88.1</td><td>08:29</td><td><span class="badge orange">Near Full</span></td></tr>
+                    <tr><td><b>NRB-007</b></td><td>South C, Mugoya Estate</td><td>Wet Organic</td><td><div class="bar"><div class="fill" style="width:37%"></div></div> <b>37%</b></td><td class="num">49.6</td><td>08:40</td><td><span class="badge">Normal</span></td></tr>
+                    <tr><td><b>NRB-008</b></td><td>Lavington, James Gichuru Rd</td><td>General</td><td><div class="bar"><div class="fill orange" style="width:79%"></div></div> <b>79%</b></td><td class="num">117.3</td><td>08:12</td><td><span class="badge orange">Near Full</span></td></tr>
+                    <tr><td><b>NRB-009</b></td><td>Kileleshwa, Oloitokitok Rd</td><td>Dry Recyclables</td><td><div class="bar"><div class="fill" style="width:54%"></div></div> <b>54%</b></td><td class="num">70.8</td><td>08:26</td><td><span class="badge">Normal</span></td></tr>
+                    <tr><td><b>NRB-010</b></td><td>Ngong Road, Prestige Plaza</td><td>General</td><td><div class="bar"><div class="fill" style="width:12%"></div></div> <b>12%</b></td><td class="num">15.2</td><td>08:45</td><td><span class="badge">Normal</span></td></tr>
+                    <tr><td><b>NRB-011</b></td><td>Ruaraka, Garden Estate</td><td>Metallic</td><td><div class="bar"><div class="fill" style="width:0%"></div></div> <b>—</b></td><td class="num">—</td><td>Yesterday</td><td><span class="badge grey">Offline</span></td></tr>
+                    <tr><td><b>NRB-012</b></td><td>Upper Hill, Community Area</td><td>Wet Organic</td><td><div class="bar"><div class="fill" style="width:0%"></div></div> <b>—</b></td><td class="num">—</td><td>Yesterday</td><td><span class="badge grey">Offline</span></td></tr>
+                </table>
+            </div>
+
+            <p class="foot-note">Fill level and weight come from each bin's ultrasonic and load-cell sensors, sent over MQTT.</p>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

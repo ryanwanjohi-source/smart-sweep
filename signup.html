@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — Sign Up page.
+     This is where a new resident creates an account. The resident
+     types their details and clicks Create Account. The form then
+     opens the login page, so the resident can log in straight away. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up — Smart Sweep</title>
+    <!-- This line brings in all the colours and layout from the CSS file -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="login-page">
+        <div class="login-box">
+
+            <!-- The system logo and name -->
+            <div class="logo-box">S</div>
+            <div class="logo-name" style="color:#1c2b23;">Smart Sweep</div>
+            <div class="logo-small">Garbage Management System</div>
+
+            <h1>Create your account</h1>
+            <p class="sub">Sign up as a resident to request collections, follow your bin and pay for the service.</p>
+
+            <!-- The sign up form. When it is submitted, it opens login.html -->
+            <form action="login.html" method="get">
+                <div class="field">
+                    <label for="fullname">Full name</label>
+                    <input type="text" id="fullname" name="fullname" placeholder="e.g. Mary Wanjiku" required>
+                </div>
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Choose a username" required>
+                </div>
+                <div class="field">
+                    <label for="phone">Phone number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="e.g. 0712 345 678" required>
+                </div>
+                <div class="field">
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" name="email" placeholder="e.g. mary@example.com" required>
+                </div>
+                <div class="field">
+                    <label for="estate">Estate / Area</label>
+                    <input type="text" id="estate" name="estate" placeholder="e.g. Kilimani" required>
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                </div>
+                <div class="field">
+                    <label for="confirm">Confirm password</label>
+                    <input type="password" id="confirm" name="confirm" placeholder="Type the password again" required>
+                </div>
+                <button type="submit" class="btn">Create Account</button>
+            </form>
+
+            <div class="login-links">
+                <a href="login.html">Already have an account? Log in</a>
+            </div>
+        </div>
+        <p class="login-foot">Smart Sweep · Smart garbage collection for Nairobi estates</p>
+    </div>
+
+</body>
+</html>

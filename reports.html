@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — Reports page.
+     The money side of the system: invoices sent to residents,
+     payments received (mostly M-Pesa), and what is still unpaid. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports — Smart Sweep</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- The left side menu (same on every page) -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-box">S</div>
+            <div class="logo-name">Smart Sweep</div>
+            <div class="logo-small">Garbage Management</div>
+        </div>
+        <div class="menu">
+            <div class="menu-title">MENU</div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="about.html">About</a>
+            <a href="bins.html">Smart Bins</a>
+            <a href="alerts.html">Alerts <span class="count">3</span></a>
+            <a href="routes.html">Routes</a>
+            <a href="checkpoints.html">Checkpoints</a>
+            <a href="reports.html" class="active">Reports</a>
+            <a href="users.html">Users</a>
+        </div>
+        <div class="logout">
+            <a href="login.html">Log Out</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="top">
+            <div class="user">David Kamau<small>Dispatcher</small></div>
+            <h1>Reports</h1>
+            <div class="date">Monday, 9 November 2026</div>
+        </div>
+
+        <div class="content">
+
+            <!-- The four number cards (November 2026 so far) -->
+            <div class="cards">
+                <div class="card">
+                    <div class="card-title">INVOICES ISSUED</div>
+                    <div class="number">186</div>
+                    <div class="note">November billing statements</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">COLLECTED (M-PESA)</div>
+                    <div class="number">KSh 412,500</div>
+                    <div class="note">From 158 paid invoices</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">STILL UNPAID</div>
+                    <div class="number orange">KSh 68,000</div>
+                    <div class="note">28 invoices outstanding</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">ACTIVE RESIDENTS</div>
+                    <div class="number">342</div>
+                    <div class="note">Subscribed households</div>
+                </div>
+            </div>
+
+            <!-- Invoices table -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>Latest Invoices</h2>
+                    <span class="right"><a href="#">+ Generate billing statements</a></span>
+                </div>
+                <table>
+                    <tr>
+                        <th>INVOICE</th><th>RESIDENT</th><th>ESTATE</th><th class="num">AMOUNT (KSH)</th><th>STATUS</th>
+                    </tr>
+                    <tr><td><b>INV-2214</b></td><td>Grace Achieng</td><td>Kilimani</td><td class="num">1,500</td><td><span class="badge">Paid</span></td></tr>
+                    <tr><td><b>INV-2213</b></td><td>Peter Maina</td><td>Westlands</td><td class="num">1,500</td><td><span class="badge">Paid</span></td></tr>
+                    <tr><td><b>INV-2212</b></td><td>Faith Njeri</td><td>Ruaka</td><td class="num">2,000</td><td><span class="badge orange">Unpaid</span></td></tr>
+                    <tr><td><b>INV-2211</b></td><td>John Kiprop</td><td>Karen</td><td class="num">2,500</td><td><span class="badge">Paid</span></td></tr>
+                    <tr><td><b>INV-2210</b></td><td>Mary Wanjiku</td><td>South C</td><td class="num">1,500</td><td><span class="badge orange">Unpaid</span></td></tr>
+                    <tr><td><b>INV-2209</b></td><td>Samuel Odhiambo</td><td>Kasarani</td><td class="num">1,200</td><td><span class="badge">Paid</span></td></tr>
+                </table>
+            </div>
+
+            <!-- Payments table -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>Latest Payments</h2>
+                </div>
+                <table>
+                    <tr>
+                        <th>PAYMENT</th><th>INVOICE</th><th>METHOD</th><th>M-PESA REFERENCE</th><th>DATE</th><th class="num">AMOUNT (KSH)</th>
+                    </tr>
+                    <tr><td><b>PAY-0871</b></td><td>INV-2214</td><td>M-Pesa</td><td>QK72HD81PX</td><td>8 Nov 2026</td><td class="num">1,500</td></tr>
+                    <tr><td><b>PAY-0870</b></td><td>INV-2213</td><td>M-Pesa</td><td>QK71MB30RD</td><td>8 Nov 2026</td><td class="num">1,500</td></tr>
+                    <tr><td><b>PAY-0869</b></td><td>INV-2211</td><td>M-Pesa</td><td>QK70ZT55NK</td><td>7 Nov 2026</td><td class="num">2,500</td></tr>
+                    <tr><td><b>PAY-0868</b></td><td>INV-2209</td><td>Card</td><td>—</td><td>7 Nov 2026</td><td class="num">1,200</td></tr>
+                </table>
+            </div>
+
+            <p class="foot-note">Reports are generated by the Accountant from the invoices and payments tables.</p>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

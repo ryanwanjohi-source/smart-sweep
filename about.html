@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — About page.
+     This page explains what the system is, the problem it solves,
+     how it works step by step, and who uses it. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Smart Sweep</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- The left side menu (same on every page) -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-box">S</div>
+            <div class="logo-name">Smart Sweep</div>
+            <div class="logo-small">Garbage Management</div>
+        </div>
+        <div class="menu">
+            <div class="menu-title">MENU</div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="about.html" class="active">About</a>
+            <a href="bins.html">Smart Bins</a>
+            <a href="alerts.html">Alerts <span class="count">3</span></a>
+            <a href="routes.html">Routes</a>
+            <a href="checkpoints.html">Checkpoints</a>
+            <a href="reports.html">Reports</a>
+            <a href="users.html">Users</a>
+        </div>
+        <div class="logout">
+            <a href="login.html">Log Out</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="top">
+            <div class="user">David Kamau<small>Dispatcher</small></div>
+            <h1>About Smart Sweep</h1>
+            <div class="date">Monday, 9 November 2026</div>
+        </div>
+
+        <div class="content">
+
+            <!-- What the system is -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>What is Smart Sweep?</h2>
+                </div>
+                <div class="box-body">
+                    <p>Smart Sweep is a smart garbage management system for urban estates in Kenya.
+                    It uses bins fitted with sensors to measure how full each bin is, then plans
+                    collection routes so that trucks only travel to bins that actually need emptying.</p>
+                    <br>
+                    <p>The system brings residents, dispatchers, collection drivers and accountants
+                    together in one place: residents request collections and pay for the service,
+                    dispatchers watch the bins and plan the routes, drivers follow the routes and
+                    update their job status, and accountants handle invoices and payments.</p>
+                </div>
+            </div>
+
+            <!-- The problem it solves -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>The Problem It Solves</h2>
+                </div>
+                <div class="box-body">
+                    <p>In many estates, garbage trucks follow a fixed timetable. They drive to bins
+                    that are almost empty, wasting fuel and time — and at the same time, other bins
+                    overflow before the truck comes, leaving waste in the open. There is no easy way
+                    to know which bin needs attention, and residents have no simple way to request a
+                    collection or follow up a payment.</p>
+                    <br>
+                    <p>Smart Sweep fixes this by letting the bins speak for themselves: every bin
+                    reports its own fill level, so collections happen when they are needed,
+                    not just when the timetable says so.</p>
+                </div>
+            </div>
+
+            <!-- How it works, step by step -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>How It Works</h2>
+                </div>
+                <div class="box-body">
+                    <p><b>Step 1 — The bin measures itself.</b> An ultrasonic sensor measures the fill
+                    level and a load cell measures the weight. The readings are sent to the system
+                    over MQTT.</p>
+                    <br>
+                    <p><b>Step 2 — An alert is raised.</b> When a bin reaches 80% full, the system
+                    raises a fill-level alert for the dispatcher.</p>
+                    <br>
+                    <p><b>Step 3 — A route is planned.</b> The dispatcher schedules a collection and
+                    the system works out an efficient route covering the bins that need emptying.</p>
+                    <br>
+                    <p><b>Step 4 — The driver collects.</b> The collection driver follows the route,
+                    empties the bins and updates the job status. If something goes wrong, the driver
+                    reports a delay.</p>
+                    <br>
+                    <p><b>Step 5 — The resident pays.</b> The accountant generates the invoice and the
+                    resident pays, for example through M-Pesa. Every action is recorded in the
+                    system's audit log.</p>
+                </div>
+            </div>
+
+            <!-- Who uses the system -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>Who Uses It</h2>
+                </div>
+                <table>
+                    <tr><th>USER</th><th>WHAT THEY DO IN THE SYSTEM</th></tr>
+                    <tr><td><b>Resident</b></td><td>Requests a disposal, follows bin status, and pays for the service.</td></tr>
+                    <tr><td><b>Dispatcher</b></td><td>Watches the bins, registers residents, and schedules collection routes.</td></tr>
+                    <tr><td><b>Collection Driver</b></td><td>Follows the assigned route, updates job status, and reports delays.</td></tr>
+                    <tr><td><b>Accountant</b></td><td>Generates invoices, records payments, and prepares financial reports.</td></tr>
+                    <tr><td><b>Administrator</b></td><td>Manages users and smart bins, and views the system logs.</td></tr>
+                </table>
+            </div>
+
+            <p class="foot-note">Smart Sweep — a final-year BBIT project by Ryan Wachira (227580) and David Amutebi (227625), Strathmore University.</p>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
