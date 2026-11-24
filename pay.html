@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — Pay an Invoice page.
+     The front end of the Payments API (api/payments.php):
+     find an invoice, choose how to pay — M-Pesa, PayBill,
+     Bank Transfer or Cash — and the API does the rest. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay an Invoice — Smart Sweep</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- The left side menu (same on every page) -->
+    <div class="sidebar">
+        <div class="logo">
+            <img class="logo-img" src="img/smart-sweep-logo-mark.png" alt="Smart Sweep logo">
+            <div class="logo-name">Smart Sweep</div>
+            <div class="logo-small">Garbage Management</div>
+        </div>
+        <div class="menu">
+            <div class="menu-title">MENU</div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="about.html">About</a>
+            <a href="bins.html">Smart Bins</a>
+            <a href="alerts.html">Alerts <span class="count">3</span></a>
+            <a href="routes.html">Routes</a>
+            <a href="reports.html">Reports</a>
+            <a href="pay.html" class="active">Pay Invoice</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="users.html">Users</a>
+        </div>
+        <div class="logout">
+            <a href="login.html">Log Out</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="top">
+            <div class="user">Ann Wambui<small>Accountant</small></div>
+            <h1>Pay an Invoice</h1>
+            <div class="date">Monday, 23 November 2026</div>
+        </div>
+
+        <div class="content">
+
+            <!-- Step 1: find the invoice -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>1. Find the invoice</h2>
+                </div>
+                <p>
+                    <input type="text" id="invoiceCode" placeholder="Invoice code, e.g. INV-2212" style="width:260px">
+                    <button class="btn" id="findBtn" type="button">Find invoice</button>
+                </p>
+                <div id="invoiceInfo"></div>
+            </div>
+
+            <!-- Step 2: choose how to pay -->
+            <div class="box" id="payBox" style="display:none">
+                <div class="box-head">
+                    <h2>2. Choose how to pay</h2>
+                </div>
+                <p>
+                    <label><input type="radio" name="method" value="M-Pesa" checked> M-Pesa</label> &nbsp;
+                    <label><input type="radio" name="method" value="M-Pesa PayBill"> M-Pesa PayBill</label> &nbsp;
+                    <label><input type="radio" name="method" value="Bank Transfer"> Bank Transfer</label> &nbsp;
+                    <label><input type="radio" name="method" value="Cash"> Cash</label>
+                </p>
+
+                <div id="fieldsMpesa">
+                    <p>M-Pesa phone number<br>
+                    <input type="text" id="phone" placeholder="e.g. 0712 345 678" style="width:260px"></p>
+                    <p class="foot-note">You will get an M-Pesa prompt on this phone — enter your PIN to pay.</p>
+                </div>
+
+                <div id="fieldsPaybill" style="display:none">
+                    <p class="foot-note">Pay on your phone with Lipa na M-Pesa → PayBill. When you continue,
+                    the API gives you the business number — your account number is your invoice code.
+                    The payment completes when Safaricom confirms it.</p>
+                </div>
+
+                <div id="fieldsBank" style="display:none">
+                    <p class="foot-note">When you continue, the API gives you the Smart Sweep bank account
+                    and a reference to quote on the transfer. The Accountant confirms the payment
+                    once the transfer lands.</p>
+                </div>
+
+                <div id="fieldsCash" style="display:none">
+                    <p class="foot-note">Pay at the Smart Sweep office. The payment is recorded as
+                    received as soon as you continue.</p>
+                </div>
+
+                <p><button class="btn" id="payBtn" type="button">Pay now</button></p>
+            </div>
+
+            <!-- The answer from the API -->
+            <div class="box" id="resultBox" style="display:none">
+                <div class="box-head">
+                    <h2>Result</h2>
+                </div>
+                <div id="result"></div>
+            </div>
+
+            <p class="foot-note">Payments are handled by the Smart Sweep Payments API (api/payments.php),
+            which accepts M-Pesa, M-Pesa PayBill, Bank Transfer and Cash. <span id="modeNote"></span></p>
+
+        </div>
+    </div>
+</div>
+
+<script>
+// The Pay page talks to the Payments API and shows its answer
+// in words — the same rule the whole system follows.
+var API = 'api/payments.php';
+var currentInvoice = null;
+
+function show(box, html) {
+    var el = document.getElementById(box);
+    el.innerHTML = html;
+    el.style.display = 'block';
+}
+
+function money(n) { return 'KSh ' + Number(n).toLocaleString('en-KE'); }
+
+document.getElementById('findBtn').onclick = function () {
+    var code = document.getElementById('invoiceCode').value.trim();
+    if (!code) { show('invoiceInfo', '<p>Enter the invoice code from the invoice.</p>'); return; }
+    fetch(API + '?invoice=' + encodeURIComponent(code))
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+            if (!d.success) {
+                show('invoiceInfo', '<p>' + d.message + '</p>');
+                document.getElementById('payBox').style.display = 'none';
+                return;
+            }
+            currentInvoice = d.invoice;
+            document.getElementById('modeNote').textContent =
+                d.test_mode ? 'The API is in test mode: no real money moves.' : '';
+            var badge = d.invoice.status === 'Paid'
+                ? '<span class="badge">Paid</span>' : '<span class="badge orange">Unpaid</span>';
+            show('invoiceInfo',
+                '<table><tr><th>INVOICE</th><th>RESIDENT</th><th>ESTATE</th><th class="num">AMOUNT</th><th>STATUS</th></tr>' +
+                '<tr><td><b>' + d.invoice.code + '</b></td><td>' + d.invoice.resident + '</td><td>' +
+                d.invoice.estate + '</td><td class="num">' + money(d.invoice.amount) + '</td><td>' + badge +
+                '</td></tr></table>');
+            document.getElementById('payBox').style.display =
+                d.invoice.status === 'Paid' ? 'none' : 'block';
+        })
+        .catch(function () { show('invoiceInfo', '<p>The payments service is not answering. Is the site running on XAMPP?</p>'); });
+};
+
+var fieldSets = { 'M-Pesa': 'fieldsMpesa', 'M-Pesa PayBill': 'fieldsPaybill', 'Bank Transfer': 'fieldsBank', 'Cash': 'fieldsCash' };
+document.querySelectorAll('input[name="method"]').forEach(function (radio) {
+    radio.onchange = function () {
+        for (var m in fieldSets) {
+            document.getElementById(fieldSets[m]).style.display = 'none';
+        }
+        document.getElementById(fieldSets[radio.value]).style.display = 'block';
+    };
+});
+
+document.getElementById('payBtn').onclick = function () {
+    if (!currentInvoice) return;
+    var method = document.querySelector('input[name="method"]:checked').value;
+    var body = { action: 'initiate', invoice_code: currentInvoice.code, method: method };
+    if (method === 'M-Pesa') body.phone = document.getElementById('phone').value;
+    fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+            if (!d.success) { show('result', '<p>' + d.message + '</p>'); return; }
+            var html = '<p><b>' + d.message + '</b></p>' +
+                '<table><tr><th>PAYMENT</th><th>METHOD</th><th>REFERENCE</th><th>STATUS</th><th class="num">AMOUNT</th></tr>' +
+                '<tr><td><b>' + d.payment_code + '</b></td><td>' + d.method + '</td><td>' +
+                (d.mpesa_ref || d.reference || '—') + '</td><td>' + d.status + '</td><td class="num">' +
+                money(d.amount) + '</td></tr></table>';
+            if (d.paybill) {
+                html += '<p>On your phone: <b>Lipa na M-Pesa → PayBill</b> → business number <b>' +
+                    d.paybill.business_number + '</b>, account number <b>' + d.paybill.account_number +
+                    '</b> (your invoice code), amount <b>' + money(d.paybill.amount) + '</b>.</p>';
+            }
+            if (d.bank) {
+                html += '<p>Transfer to: <b>' + d.bank.bank_name + '</b>, account name <b>' +
+                    d.bank.account_name + '</b>, account number <b>' + d.bank.account_number +
+                    '</b> — quote reference <b>' + d.reference + '</b>.</p>';
+            }
+            if (d.note) html += '<p class="foot-note">' + d.note + '</p>';
+            if (d.test_mode) html += '<p class="foot-note">Test mode: no real money moved.</p>';
+            show('result', html);
+            if (d.status === 'Completed') {
+                document.getElementById('payBox').style.display = 'none';
+            }
+        })
+        .catch(function () { show('result', '<p>The payments service is not answering. Is the site running on XAMPP?</p>'); });
+};
+</script>
+
+</body>
+</html>
