@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — Resident Reviews page.
+     Residents send their reviews of the service here, and read
+     what other residents have said. The page talks to
+     api/reviews.php. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resident Reviews — Smart Sweep</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- The left side menu (same on every page) -->
+    <div class="sidebar">
+        <div class="logo">
+            <img class="logo-img" src="img/smart-sweep-logo-mark.png" alt="Smart Sweep logo">
+            <div class="logo-name">Smart Sweep</div>
+            <div class="logo-small">Garbage Management</div>
+        </div>
+        <div class="menu">
+            <div class="menu-title">MENU</div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="about.html">About</a>
+            <a href="bins.html">Smart Bins</a>
+            <a href="alerts.html">Alerts <span class="count">3</span></a>
+            <a href="routes.html">Routes</a>
+            <a href="reports.html">Reports</a>
+            <a href="pay.html">Pay Invoice</a>
+            <a href="reviews.html" class="active">Reviews</a>
+            <a href="users.html">Users</a>
+        </div>
+        <div class="logout">
+            <a href="login.html">Log Out</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="top">
+            <div class="user">Resident<small>Reviews</small></div>
+            <h1>Resident Reviews</h1>
+            <div class="date">Monday, 23 November 2026</div>
+        </div>
+
+        <div class="content">
+
+            <!-- Send a review -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>Send your review</h2>
+                    <span class="right" id="averageNote"></span>
+                </div>
+                <p>Your name<br>
+                <input type="text" id="rName" placeholder="e.g. Faith Njeri" style="width:260px"></p>
+                <p>Your estate<br>
+                <input type="text" id="rEstate" placeholder="e.g. Ruaka" style="width:260px"></p>
+                <p>Your rating<br>
+                <select id="rRating" style="width:260px">
+                    <option value="5">★★★★★ — Excellent</option>
+                    <option value="4">★★★★ — Good</option>
+                    <option value="3">★★★ — Average</option>
+                    <option value="2">★★ — Poor</option>
+                    <option value="1">★ — Very poor</option>
+                </select></p>
+                <p>Your review<br>
+                <textarea id="rMessage" rows="4" style="width:90%" placeholder="What is the service doing well? What should it improve?"></textarea></p>
+                <p><button class="btn" id="sendBtn" type="button">Send review</button></p>
+                <div id="sendResult"></div>
+            </div>
+
+            <!-- What residents have said -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>What residents say</h2>
+                </div>
+                <div id="reviewList"><p>Loading reviews…</p></div>
+            </div>
+
+            <p class="foot-note">Reviews are handled by the Smart Sweep Reviews API (api/reviews.php).
+            Honest reviews help the office fix what is not working.</p>
+
+        </div>
+    </div>
+</div>
+
+<script>
+var API = 'api/reviews.php';
+
+function stars(n) {
+    var s = '';
+    for (var i = 0; i < 5; i++) s += i < n ? '★' : '☆';
+    return s;
+}
+
+function loadReviews() {
+    fetch(API)
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+            if (!d.success) return;
+            document.getElementById('averageNote').textContent =
+                d.total ? 'Average rating ' + d.average + ' out of 5, from ' + d.total + ' reviews' : '';
+            if (!d.reviews.length) {
+                document.getElementById('reviewList').innerHTML = '<p>No reviews yet — be the first.</p>';
+                return;
+            }
+            var html = '<table><tr><th>RESIDENT</th><th>ESTATE</th><th>RATING</th><th>REVIEW</th><th>DATE</th></tr>';
+            d.reviews.forEach(function (r) {
+                html += '<tr><td><b>' + r.resident + '</b></td><td>' + r.estate + '</td><td>' +
+                    stars(r.rating) + '</td><td>' + r.message + '</td><td>' + r.date + '</td></tr>';
+            });
+            document.getElementById('reviewList').innerHTML = html + '</table>';
+        })
+        .catch(function () {
+            document.getElementById('reviewList').innerHTML =
+                '<p>The reviews service is not answering. Is the site running on XAMPP?</p>';
+        });
+}
+
+document.getElementById('sendBtn').onclick = function () {
+    var body = {
+        resident_name: document.getElementById('rName').value,
+        estate: document.getElementById('rEstate').value,
+        rating: parseInt(document.getElementById('rRating').value, 10),
+        message: document.getElementById('rMessage').value
+    };
+    fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+            document.getElementById('sendResult').innerHTML = '<p><b>' + d.message + '</b></p>';
+            if (d.success) {
+                document.getElementById('rMessage').value = '';
+                loadReviews();
+            }
+        })
+        .catch(function () {
+            document.getElementById('sendResult').innerHTML =
+                '<p>The reviews service is not answering. Is the site running on XAMPP?</p>';
+        });
+};
+
+loadReviews();
+</script>
+
+</body>
+</html>

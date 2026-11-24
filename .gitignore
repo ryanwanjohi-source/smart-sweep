@@ -1,0 +1,2 @@
+# Real payment gateway secrets — never commit (use the sample to set up)
+config/payments.php
