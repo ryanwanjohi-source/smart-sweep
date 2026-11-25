@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — System Control (Administrator).
+     This is where the administrator lands after logging in.
+     It is not the resident's dashboard: from here the
+     administrator sees the whole system — live numbers for
+     every part of it, every user account with its role and
+     status, and the alerts still waiting — and can change
+     roles, suspend accounts and acknowledge alerts.
+     The numbers and tables are loaded live from api/admin.php.
+     Only a logged-in Administrator may open this page:
+     js/guard.js sends anyone else to their own home page,
+     and the API refuses anyone who is not the administrator. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Control — Smart Sweep</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-role="Administrator">
+
+<div class="page">
+
+    <!-- ===== The left side menu. ===== -->
+    <div class="sidebar">
+        <div class="logo">
+            <img class="logo-img" src="img/smart-sweep-logo-mark.png" alt="Smart Sweep logo">
+            <div class="logo-name">Smart Sweep</div>
+            <div class="logo-small">Garbage Management</div>
+        </div>
+        <div class="menu">
+            <div class="menu-title">MENU</div>
+            <a href="admin.html" class="active">System Control</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="about.html">About</a>
+            <a href="bins.html">Smart Bins</a>
+            <a href="alerts.html">Alerts</a>
+            <a href="routes.html">Routes</a>
+            <a href="dispatcher.html">Dispatcher</a>
+            <a href="reports.html">Reports</a>
+            <a href="pay.html">Pay Invoice</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="users.html">Users</a>
+        </div>
+        <div class="logout">
+            <a href="api/logout.php">Log Out</a>
+        </div>
+    </div>
+
+    <!-- ===== The main part of the page ===== -->
+    <div class="main">
+
+        <!-- The white bar at the top -->
+        <div class="top">
+            <div class="user"><span data-user-name>Administrator</span><small data-user-role>Administrator</small></div>
+            <h1>System Control</h1>
+            <div class="date">Administrator — the whole system, from one place</div>
+        </div>
+
+        <div class="content">
+
+            <!-- The live numbers for every part of the system -->
+            <div class="cards">
+                <div class="card">
+                    <div class="card-title">SYSTEM USERS</div>
+                    <div class="number" id="stat-users">–</div>
+                    <div class="note">Accounts in the system</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">SMART BINS</div>
+                    <div class="number" id="stat-bins">–</div>
+                    <div class="note">Bins reporting telemetry</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">OPEN ALERTS</div>
+                    <div class="number red" id="stat-alerts">–</div>
+                    <div class="note">Waiting to be acknowledged</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">ROUTES</div>
+                    <div class="number" id="stat-routes">–</div>
+                    <div class="note">Collection routes planned</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">UNPAID INVOICES</div>
+                    <div class="number orange" id="stat-invoices">–</div>
+                    <div class="note">Invoices still open</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">PAYMENTS</div>
+                    <div class="number" id="stat-payments">–</div>
+                    <div class="note">Payments recorded</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">REVIEWS</div>
+                    <div class="number" id="stat-reviews">–</div>
+                    <div class="note">Resident reviews received</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">TELEMETRY READINGS</div>
+                    <div class="number" id="stat-readings">–</div>
+                    <div class="note">Bin readings stored</div>
+                </div>
+            </div>
+
+            <!-- Every user account. The role and status can be
+                 changed here; Save sends the change to the API.
+                 Changing your own role or status is refused,
+                 so you cannot lock yourself out of this page. -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>System Users</h2>
+                    <span class="right" id="users-note">Loading…</span>
+                </div>
+                <table>
+                    <tr>
+                        <th>NAME</th><th>USERNAME</th><th>ROLE</th><th>STATUS</th><th></th>
+                    </tr>
+                    <tbody id="users-body">
+                        <tr><td colspan="5">Loading users…</td></tr>
+                    </tbody>
+                </table>
+                <p class="foot-note">A new role takes effect at that person's next login — they land on the home page of their new role. Suspended accounts cannot log in at all. "Unpaid Invoice" is a billing note, not a login state: that resident can still log in to pay.</p>
+            </div>
+
+            <!-- The alerts still waiting, with the button that
+                 clears each one. -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>Alerts Waiting</h2>
+                    <a class="right" href="alerts.html">View all alerts</a>
+                </div>
+                <table>
+                    <tr>
+                        <th>ALERT</th><th>SUBJECT</th><th>TYPE</th><th>MESSAGE</th><th></th>
+                    </tr>
+                    <tbody id="alerts-body">
+                        <tr><td colspan="5">Loading alerts…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="foot-note">Smart Sweep — multi-sensor bin telemetry, automated segregation and route optimisation for urban Kenya.</p>
+
+        </div>
+    </div>
+</div>
+
+<script src="js/guard.js"></script>
+<script>
+    // Load the live numbers, users and alerts from the Admin API.
+    var API = 'api/admin.php';
+    var ROLES = ['Administrator', 'Dispatcher', 'Collection Driver', 'Accountant', 'Resident'];
+
+    function post(body) {
+        return fetch(API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        }).then(function (r) { return r.json(); });
+    }
+
+    function load() {
+        fetch(API).then(function (r) { return r.json(); }).then(function (d) {
+            if (!d.success) {
+                document.getElementById('users-note').textContent = d.message;
+                return;
+            }
+            var s = d.stats;
+            document.getElementById('stat-users').textContent = s.users;
+            document.getElementById('stat-bins').textContent = s.bins;
+            document.getElementById('stat-alerts').textContent = s.open_alerts;
+            document.getElementById('stat-routes').textContent = s.routes;
+            document.getElementById('stat-invoices').textContent = s.unpaid_invoices;
+            document.getElementById('stat-payments').textContent = s.payments;
+            document.getElementById('stat-reviews').textContent = s.reviews;
+            document.getElementById('stat-readings').textContent = s.readings;
+
+            document.getElementById('users-note').textContent = d.users.length + ' accounts';
+            var html = '';
+            d.users.forEach(function (u) {
+                // The status list keeps the person's real status:
+                // "Unpaid Invoice" is a billing note, and saving
+                // a role change must not wipe it away.
+                var statuses = ['Active', 'Suspended'];
+                if (statuses.indexOf(u.status) === -1) statuses.unshift(u.status);
+                html += '<tr data-user="' + u.username + '" data-orig-role="' + u.role + '" data-orig-status="' + u.status + '">'
+                    + '<td><b>' + u.full_name + '</b></td><td>' + u.username + '</td>';
+                html += '<td><select data-role-for="' + u.username + '">'
+                    + ROLES.map(function (r) {
+                        return '<option' + (r === u.role ? ' selected' : '') + '>' + r + '</option>';
+                    }).join('') + '</select></td>';
+                html += '<td><select data-status-for="' + u.username + '">'
+                    + statuses.map(function (st) {
+                        return '<option' + (st === u.status ? ' selected' : '') + '>' + st + '</option>';
+                    }).join('') + '</select></td>';
+                html += '<td><button class="btn" data-save="' + u.username + '">Save</button></td></tr>';
+            });
+            document.getElementById('users-body').innerHTML = html;
+
+            var ah = '';
+            if (d.alerts.length === 0) {
+                ah = '<tr><td colspan="5">No alerts are waiting — everything is acknowledged.</td></tr>';
+            }
+            d.alerts.forEach(function (a) {
+                ah += '<tr><td><b>' + a.alert_code + '</b></td><td>' + a.subject + '</td><td>' + a.alert_type + '</td><td>' + a.message + '</td>'
+                    + '<td><button class="btn" data-ack="' + a.alert_code + '">Acknowledge</button></td></tr>';
+            });
+            document.getElementById('alerts-body').innerHTML = ah;
+        });
+    }
+
+    document.addEventListener('click', function (e) {
+        var save = e.target.getAttribute('data-save');
+        if (save) {
+            // Only send what actually changed: saving a role
+            // must never wipe a billing note like
+            // "Unpaid Invoice" off a resident's account.
+            var row = document.querySelector('[data-user="' + save + '"]');
+            var role = document.querySelector('[data-role-for="' + save + '"]').value;
+            var status = document.querySelector('[data-status-for="' + save + '"]').value;
+            var roleChanged = role !== row.getAttribute('data-orig-role');
+            var statusChanged = status !== row.getAttribute('data-orig-status');
+            if (!roleChanged && !statusChanged) { alert('Nothing changed for ' + save + '.'); return; }
+            var done = function (msg) { alert(msg); load(); };
+            if (roleChanged && statusChanged) {
+                post({ action: 'set_role', username: save, role: role }).then(function (r1) {
+                    if (!r1.success) { alert(r1.message); load(); return; }
+                    post({ action: 'set_status', username: save, status: status }).then(function (r2) {
+                        done(r2.success ? (r1.message + ' ' + r2.message) : r2.message);
+                    });
+                });
+            } else if (roleChanged) {
+                post({ action: 'set_role', username: save, role: role }).then(function (r) { done(r.message); });
+            } else {
+                post({ action: 'set_status', username: save, status: status }).then(function (r) { done(r.message); });
+            }
+        }
+        var ack = e.target.getAttribute('data-ack');
+        if (ack) {
+            post({ action: 'acknowledge_alert', alert_code: ack }).then(function (r) {
+                alert(r.message);
+                load();
+            });
+        }
+    });
+
+    load();
+</script>
+
+</body>
+</html>
