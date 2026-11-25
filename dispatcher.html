@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!-- Smart Sweep — Dispatcher: Routes & Drivers.
+     This is where the dispatcher lands after logging in.
+     It is the dispatcher's working page: the routes with
+     the driver each one is allocated to, the form that
+     allocates a route to a driver, and the alerts still
+     waiting for a route to be planned. Allocating sends
+     the choice to api/routes.php, which only accepts a
+     real collection-driver account — a route can never be
+     given to a resident, an accountant, or a name that
+     does not exist. Only a logged-in Dispatcher (or the
+     Administrator) may open this page: js/guard.js sends
+     anyone else to their own home page. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispatcher — Routes &amp; Drivers — Smart Sweep</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-role="Dispatcher">
+
+<div class="page">
+
+    <!-- ===== The left side menu. ===== -->
+    <div class="sidebar">
+        <div class="logo">
+            <img class="logo-img" src="img/smart-sweep-logo-mark.png" alt="Smart Sweep logo">
+            <div class="logo-name">Smart Sweep</div>
+            <div class="logo-small">Garbage Management</div>
+        </div>
+        <div class="menu">
+            <div class="menu-title">MENU</div>
+            <a href="dispatcher.html" class="active">Dispatcher</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="about.html">About</a>
+            <a href="bins.html">Smart Bins</a>
+            <a href="alerts.html">Alerts</a>
+            <a href="routes.html">Routes</a>
+            <a href="reports.html">Reports</a>
+            <a href="pay.html">Pay Invoice</a>
+            <a href="users.html">Users</a>
+        </div>
+        <div class="logout">
+            <a href="api/logout.php">Log Out</a>
+        </div>
+    </div>
+
+    <!-- ===== The main part of the page ===== -->
+    <div class="main">
+
+        <!-- The white bar at the top -->
+        <div class="top">
+            <div class="user"><span data-user-name>Dispatcher</span><small data-user-role>Dispatcher</small></div>
+            <h1>Routes &amp; Drivers</h1>
+            <div class="date">Dispatcher — allocate routes to the collection drivers</div>
+        </div>
+
+        <div class="content">
+
+            <!-- The allocation form: pick a route, pick a driver,
+                 and the route belongs to that driver. -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>Allocate a Route</h2>
+                </div>
+                <div class="box-body">
+                    <div class="field">
+                        <label for="route">Route</label>
+                        <select id="route">
+                            <option value="">Loading routes…</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="driver">Driver</label>
+                        <select id="driver">
+                            <option value="">Loading drivers…</option>
+                        </select>
+                    </div>
+                    <button class="btn" id="allocate">Allocate Route</button>
+                    <p class="foot-note" id="alloc-note">Only active collection drivers are listed. The route keeps its vehicle and stops — only the driver changes.</p>
+                </div>
+            </div>
+
+            <!-- Every route with the driver it is allocated to. -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>All Routes</h2>
+                    <a class="right" href="routes.html">View routes page</a>
+                </div>
+                <table>
+                    <tr>
+                        <th>ROUTE</th><th>NAME</th><th>DRIVER</th><th>VEHICLE</th><th>STATUS</th><th>STOPS</th>
+                    </tr>
+                    <tbody id="routes-body">
+                        <tr><td colspan="6">Loading routes…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- The alerts still waiting — these are the bins
+                 that need a route planned and a driver sent. -->
+            <div class="box">
+                <div class="box-head">
+                    <h2>Alerts Still Waiting</h2>
+                    <a class="right" href="alerts.html">View all alerts</a>
+                </div>
+                <table>
+                    <tr>
+                        <th>ALERT</th><th>SUBJECT</th><th>TYPE</th><th>MESSAGE</th>
+                    </tr>
+                    <tbody id="alerts-body">
+                        <tr><td colspan="4">Loading alerts…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="foot-note">Smart Sweep — multi-sensor bin telemetry, automated segregation and route optimisation for urban Kenya.</p>
+
+        </div>
+    </div>
+</div>
+
+<script src="js/guard.js"></script>
+<script>
+    // Load routes + drivers, and send allocations to the API.
+    var API = 'api/routes.php';
+
+    function load() {
+        fetch(API).then(function (r) { return r.json(); }).then(function (d) {
+            if (!d.success) {
+                document.getElementById('alloc-note').textContent = d.message;
+                return;
+            }
+            var rs = document.getElementById('route');
+            rs.innerHTML = '<option value="">Choose a route…</option>'
+                + d.routes.map(function (rt) {
+                    return '<option value="' + rt.route_code + '">' + rt.route_code + ' — ' + rt.name + ' (now: ' + rt.driver + ')</option>';
+                }).join('');
+            document.getElementById('driver').innerHTML = '<option value="">Choose a driver…</option>'
+                + d.drivers.map(function (dr) {
+                    return '<option value="' + dr.username + '">' + dr.full_name + ' (' + dr.username + ')</option>';
+                }).join('');
+
+            var html = '';
+            d.routes.forEach(function (rt) {
+                html += '<tr><td><b>' + rt.route_code + '</b></td><td>' + rt.name + '</td><td>' + rt.driver + '</td><td>' + rt.vehicle + '</td><td><span class="badge">' + rt.status + '</span></td><td>' + rt.stops + '</td></tr>';
+            });
+            document.getElementById('routes-body').innerHTML = html;
+
+            var ah = '';
+            if (d.alerts.length === 0) ah = '<tr><td colspan="4">No alerts are waiting.</td></tr>';
+            d.alerts.forEach(function (a) {
+                ah += '<tr><td><b>' + a.alert_code + '</b></td><td>' + a.subject + '</td><td>' + a.alert_type + '</td><td>' + a.message + '</td></tr>';
+            });
+            document.getElementById('alerts-body').innerHTML = ah;
+        });
+    }
+
+    document.getElementById('allocate').addEventListener('click', function () {
+        var route = document.getElementById('route').value;
+        var driver = document.getElementById('driver').value;
+        if (!route || !driver) {
+            document.getElementById('alloc-note').textContent = 'Choose a route and a driver first.';
+            return;
+        }
+        fetch(API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ route_code: route, driver: driver })
+        }).then(function (r) { return r.json(); }).then(function (d) {
+            document.getElementById('alloc-note').textContent = d.message;
+            if (d.success) load();
+        });
+    });
+
+    load();
+</script>
+
+</body>
+</html>
