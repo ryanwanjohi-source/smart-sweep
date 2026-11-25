@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <!-- Smart Sweep — Login page.
      This is the first page a user sees. The user types a username
-     and a password and clicks Log In. The form posts to
-     api/login.php, which checks the account in the users table
-     and sends the user to the home page of their own role:
-     the administrator to System Control, the dispatcher to
-     Routes & Drivers, the driver to Routes, the accountant to
-     Reports, and the resident to the Dashboard. The role comes
-     from the account — the form no longer asks the user to
-     pick one, so nobody can walk into another role's pages
-     by choosing it here. -->
+     and a password, picks a role, and clicks Log In. The form then
+     opens the dashboard page. -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,21 +22,14 @@
             <h1>Welcome back</h1>
             <p class="sub">Log in to continue to the Smart Sweep system.</p>
 
-            <!-- Shown only when a login attempt fails (the login
-                 API sends the user back here with ?error=). -->
-            <div class="demo" id="login-error" style="display:none;color:#b3261e;"></div>
-
-            <!-- Demo accounts, so anyone can try the system.
-                 One demo password works for every account below. -->
+            <!-- Demo accounts, so anyone can try the system -->
             <div class="demo">
                 Demo accounts — Dispatcher: <b>dkamau</b> · Driver: <b>jmwangi</b> ·
-                Accountant: <b>awambui</b> · Administrator: <b>admin</b> · Resident: <b>gachieng</b><br>
-                Demo password for all accounts: <b>smart123</b>
+                Accountant: <b>awambui</b> · Administrator: <b>admin</b> (any password)
             </div>
 
-            <!-- The login form. It posts to the login API, which
-                 checks the password and redirects by role. -->
-            <form action="api/login.php" method="post">
+            <!-- The login form. When it is submitted, it opens dashboard.html -->
+            <form action="dashboard.html" method="get">
                 <div class="field">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" placeholder="e.g. dkamau" required>
@@ -51,6 +37,16 @@
                 <div class="field">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="field">
+                    <label for="role">Log in as</label>
+                    <select id="role" name="role">
+                        <option>Dispatcher</option>
+                        <option>Collection Driver</option>
+                        <option>Accountant</option>
+                        <option>Administrator</option>
+                        <option>Resident</option>
+                    </select>
                 </div>
                 <button type="submit" class="btn">Log In</button>
             </form>
@@ -62,21 +58,6 @@
         </div>
         <p class="login-foot">Smart Sweep · Smart garbage collection for Nairobi estates</p>
     </div>
-
-    <script>
-        // Show the reason when the login API sends the user back.
-        var error = new URLSearchParams(window.location.search).get('error');
-        var box = document.getElementById('login-error');
-        var messages = {
-            '1': 'Wrong username or password. Please try again.',
-            '2': 'This account has no password set yet. Ask the administrator to set one.',
-            '3': 'This account is suspended. Ask the administrator to make it Active again.'
-        };
-        if (messages[error]) {
-            box.textContent = messages[error];
-            box.style.display = 'block';
-        }
-    </script>
 
 </body>
 </html>
